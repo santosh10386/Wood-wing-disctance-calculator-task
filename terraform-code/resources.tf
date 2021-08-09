@@ -85,7 +85,7 @@ resource "aws_instance" "os" {
   vpc_security_group_ids = [ aws_security_group.allow_http.id ]
   subnet_id =  element(aws_subnet.subnet.*.id, count.index)
   tags = {
-     Name = "myos1-${count.index}"
+     Name = "Webserver-${count.index+1}"
   }
 
 }
@@ -120,13 +120,13 @@ resource "null_resource"  "webserver" {
         type     = "ssh"
         user     = "ec2-user"
         private_key = file("${path.module}/${var.key_name}.pem")
-        host     = element(aws_instance.os.*.public_ip, count.index+1)
+        host     = element(aws_instance.os.*.public_ip, count.index)
     }
 
     provisioner "remote-exec" {
         inline = [
 	    "sudo git clone ${var.repo} /webdata ",
-            "sudo docker run -dit -p 80:80 -v /webdata/${var.webcode_path}:/usr/local/apache2/htdocs/ --name websrver  httpd",
+            "sudo docker run -dit -p 80:80 -v /webdata/${var.webcode_path}:/usr/local/apache2/htdocs/ --name websrver${count.index+1}  httpd",
             "sudo echo ' Configured over ${element(aws_instance.os.*.public_ip, count.index)}'",
         
         ]

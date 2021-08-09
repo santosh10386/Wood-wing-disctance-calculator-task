@@ -1,4 +1,6 @@
 /*
+For Direct Authentication
+
 variable "account_id" {
     description = "AWS Access key"
 }
@@ -7,6 +9,8 @@ variable "account_pass" {
     description = "AWS Secret Key"
 }
 */
+
+// for profile authentication
 
 variable "account_profile" {
     default = "default"
@@ -17,8 +21,6 @@ variable "aws_region" {
     default = "ap-south-1"
     description = "Region where VPC Created"
 }
-
-
 
 variable "vpc_cidr" {
     default  = "10.0.0.0/16"
@@ -35,7 +37,6 @@ variable "subnet_cidr" {
     type = list
     description = "List of Subnet to be created"
 }
-
 
 variable "azs" {
     default = ["ap-south-1a","ap-south-1b","ap-south-1a"]
@@ -65,5 +66,3 @@ variable "repo"{
 variable "webcode_path"{
     description = "Webcode path in repository"
 }
-
-
