@@ -104,7 +104,7 @@ resource "null_resource"  "nullremote1" {
 
     provisioner "remote-exec" {
         inline = [
-        "sudo yum  install docker  -y",
+        "sudo yum  install docker git  -y",
         "sudo systemctl start docker",
         "sudo systemctl enable docker",
         "sleep 5"
@@ -112,29 +112,9 @@ resource "null_resource"  "nullremote1" {
     }
 }
 
-
-resource "null_resource"  "mysql" {   
+resource "null_resource"  "webserver" {
     depends_on = [null_resource.nullremote1]
-
-    connection {
-        type     = "ssh"
-        user     = "ec2-user"
-        private_key = file("${path.module}/${var.key_name}.pem")
-        host     = aws_instance.os.0.public_ip
-    }
-
-    provisioner "remote-exec" {
-        inline = [
-        "sudo docker run  -dit --name mysql_container --env='MYSQL_ROOT_PASSWORD=root_pass' --env='MYSQL_USER=user1' --env='MYSQL_PASSWORD=user_pass' --env='MYSQL_DATABASE=wordpress' -p 80:3306 mysql:5.7",
-        ]
-    }
-}
-
-
-
-resource "null_resource"  "webs" {
-    depends_on = [null_resource.mysql]
-    count = length(var.subnet_cidr)-1 
+    count = length(var.subnet_cidr) 
 
     connection {
         type     = "ssh"
@@ -145,8 +125,9 @@ resource "null_resource"  "webs" {
 
     provisioner "remote-exec" {
         inline = [
-            "sudo docker run -dit -p 80:80 --name wp1  --env='WORDPRESS_DB_HOST=${element(aws_instance.os.*.public_ip, 0)}:80' --env='WORDPRESS_DB_USER=user1' --env='WORDPRESS_DB_PASSWORD=user_pass' --env='WORDPRESS_DB_NAME=wordpress' wordpress:5.1.1-php7.3-apache",
-            "sudo echo ' Configured over ${element(aws_instance.os.*.public_ip, 0)}'",
+	    "sudo git clone ${var.repo} /webdata ",
+            "sudo docker run -dit -p 80:80 -v /webdata/${var.webcode_path}:/usr/local/apache2/htdocs/ --name websrver  httpd",
+            "sudo echo ' Configured over ${element(aws_instance.os.*.public_ip, count.index)}'",
         
         ]
     }
@@ -156,7 +137,7 @@ resource "null_resource"  "webs" {
 # Loadbalancer Creation
 
 module "elb_http" {
-  depends_on = [null_resource.webs]
+  depends_on = [null_resource.webserver]
   source  = "terraform-aws-modules/elb/aws"
   version = "~> 2.0"
 

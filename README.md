@@ -15,8 +15,8 @@ To solve the following use-case, I will focus on these points:
 
 1. Will use Html, CSS and JavaScript to create webpage.
 2. Will use apache HTTPD container over Docker container engine. ( also can use EKS service but not including here) 
-3. Static webpage will be now available over repo, then it cloned over Aws EBS for block storage and persistence.
-4.  Will use terraform as IAAC for  creating highly available Infrastructure.
+3. Static webpage will be now available over repo, then it cloned over Aws Instance. (can implemet over Aws EBS and s3 for persistance storage)
+4. Will use terraform as IAAC for  creating highly available Infrastructure.
 5. Can implement ansible for further configuration. (Not use now)
 6. Make repository with multi-branch over here to support better team  code commit.  Teammates  can send pull request for the change in main branch.
 

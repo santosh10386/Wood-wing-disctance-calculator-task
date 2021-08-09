@@ -58,3 +58,12 @@ variable "key_name" {
     description = "Desired SSH Keyname. It will create new Key"
 }
 
+variable "repo"{
+    description = "Your Website Repository Link"
+}
+
+variable "webcode_path"{
+    description = "Webcode path in repository"
+}
+
+
