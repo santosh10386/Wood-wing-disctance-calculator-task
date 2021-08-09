@@ -1,27 +1,89 @@
 <!DOCTYPE html>
- <head>
-<title>javascript get distance between two points</title>
-//Javascript script start from here.
- <script>
- function find_distance()
- {
- var x1=parseInt(document.getElementById("x1").value);
- var y1=parseInt(document.getElementById("y1").value);
- var x2=parseInt(document.getElementById("x2").value);
- var y2=parseInt(document.getElementById("y2").value);
- var distance=Math.sqrt(Math.pow((x1-x2),2)+Math.pow((y1-y2),2));
- alert("Distance: "+distance);
- }
- </script>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="Distance Calculator" content="Calculate total distance" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
 
- </head>
- <body>
- <form name="f1" method="post">
- <label>Enter the co-ordinate of point p:</label><br>
- x1:<input type="text" id="x1" size="30"/>&nbsp;y1:<input type="text" id="y1" size="30"/><br>
- <label>Enter the co-ordinate of point q:</label><br>
- x2:<input type="text" id="x2" size="30"/>&nbsp;y2:<input type="text" id="y2" size="30"/><br>
- <button onclick="find_distance()">Find Distance</button>
- </form>
- </body>
+     
+    </head>
+
+    <body>
+        <div id="wrapper">
+            <div id="top">
+                <div id="logo">
+                    <center><img src="images/logo.png" alt="Calculator logo" title="Tools For All" width=100 height=100 /></center>
+                </div>
+            </div>
+        </div>
+        <div id="body">
+		<center>
+            <h1>Distance Calculator</h1>
+
+            <div id="text">
+                Helps in calculating distance Addition.
+            </div>
+			</ center>
+            <hr />
+			<br />
+			<br />
+            <form >
+                <script type="text/javascript">
+                    function go() {
+                        var value1 = parseInt(document.getElementById("#1").value);
+                        var value2 = parseInt(document.getElementById("#2").value);
+						var unit1 = document.getElementById("unit").value;
+                        var unit2 = document.getElementById("unit2").value;
+						var output_unit = document.getElementById("output_unit").value;
+						
+						if(unit1 == "m"){
+						value1 = value1
+						}
+						
+						if(unit2 == "m"){
+						value2 = value2
+						}
+						
+											
+                        document.getElementById("total").value = value1 + value2;
+						document.getElementById("t_unit").value = "m";
+						
+                    }
+                </script>
+                <center>
+                    Distance-1: &nbsp
+                    <input type="number" id="#1" placeholder="Enter Distance" required />  
+					<input list="unit" placeholder="Select unit" required>
+					<datalist id="unit" >
+						<option value="m" />
+					</datalist>
+					<br> 
+					Distance-2: &nbsp
+					<input type="number" id="#2" placeholder="Enter Distance" required /> 
+					<input list="unit2" placeholder="Select unit" required>
+					<datalist id="unit2">
+						<option value="m" />
+					</datalist>
+                    <br />
+					Output Unit : &nbsp
+					<input list="output_unit" placeholder="Select Output unit">
+					<datalist id="output_unit" required>
+						<option value="m" />
+					</datalist>
+					<br />
+                    <br />
+
+                    
+                    <input type="button" onclick="go();" value="Calculate" />
+					<br />
+					<br />
+					<h2> RESULT</h2><br />
+					Total : &nbsp <input type="number" id="total" placeholder="0" readonly disabled />
+					<input type="text" id="t_unit"  readonly disabled />
+                </center>
+                <br />
+                <br />
+            </form>
+        </div>
+    </body>
 </html>
