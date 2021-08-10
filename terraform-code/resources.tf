@@ -94,6 +94,7 @@ resource "aws_instance" "os" {
 # Configuration
 
 resource "null_resource"  "nullremote1" {
+    depends_on = [aws_instance.os]
     count = length(var.subnet_cidr)    
     connection {
         type     = "ssh"
@@ -168,8 +169,8 @@ module "elb_http" {
  
 
   // ELB attachments
-  number_of_instances = 2
-  instances           = [aws_instance.os.1.id, aws_instance.os.2.id ]
+  number_of_instances = 3
+  instances           = [aws_instance.os.0.id, aws_instance.os.1.id, aws_instance.os.2.id ]
 
   tags = {
     Owner       = "user"

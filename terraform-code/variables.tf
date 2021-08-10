@@ -18,7 +18,6 @@ variable "account_profile" {
 }
 
 variable "aws_region" {
-    default = "ap-south-1"
     description = "Region where VPC Created"
 }
 
@@ -28,7 +27,7 @@ variable "vpc_cidr" {
 }
 
 variable "vpc_name" {
-    default = "web-mysql VPC"
+    default = "Custom VPC"
     description = "Desired Name of VPC"
 }
 
@@ -39,7 +38,6 @@ variable "subnet_cidr" {
 }
 
 variable "azs" {
-    default = ["ap-south-1a","ap-south-1b","ap-south-1a"]
     type = list
     description = "List of Availabily Zones. It is in sequence with subnet_cidr"
 }
