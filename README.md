@@ -1,4 +1,4 @@
-# Wood-wing-disctance-calculator-task
+# Wood-wing-distance-calculator-task
 
 
 ### Goal: 
